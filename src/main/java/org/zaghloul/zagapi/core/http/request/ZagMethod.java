@@ -6,7 +6,7 @@ import io.restassured.http.Method;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import lombok.Data;
-import org.zaghloul.zagapi.Exception.ZagAPIException;
+import org.zaghloul.zagapi.exception.ZagAPIException;
 
 @Data
 public class ZagMethod {

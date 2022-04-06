@@ -1,4 +1,4 @@
-package org.zaghloul.zagapi.Exception;
+package org.zaghloul.zagapi.exception;
 
 public class ZagAPIException extends RuntimeException {
 

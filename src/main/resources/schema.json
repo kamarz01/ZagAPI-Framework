@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "API Definition Schema",
+  "description": "Defines the schema used to validate an api definition",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "API/Service name",
+      "type": "string"
+    },
+    "description": {
+      "description": "API/Service description",
+      "type": "string"
+    },
+    "proxy": {
+      "description": "API/Service proxy info",
+      "type": "object",
+      "properties": {
+        "useProxy": {
+          "description": "Enable/Disable the use of proxy",
+          "type": "boolean"
+        },
+        "host": {
+          "description": "Proxy host name",
+          "type": "string"
+        },
+        "port": {
+          "description": "Proxy port",
+          "type": "string"
+        },
+        "username": {
+          "description": "Proxy auth username if required",
+          "type": "string"
+        },
+        "password": {
+          "description": "Proxy auth password if required",
+          "type": "string"
+        }
+      }
+    },
+    "requests": {
+      "description": "API/Service request list",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "API Request id",
+            "type": "string"
+          },
+          "endPoint": {
+            "description": "API Endpoint",
+            "type": "string"
+          },
+          "method": {
+            "description": "API Http Method",
+            "type": "string",
+            "enum": ["GET","POST","PATCH","DELETE","PUT","OPTIONS"]
+          },
+          "requestData": {
+            "description": "API request data",
+            "type": "object",
+            "properties": {
+              "queryParameters": {
+                "description": "API Request Query Parameters",
+                "type": "object"
+              },
+              "headers": {
+                "description": "API Request headers",
+                "type": "object"
+              },
+              "body": {
+                "description": "API Request body",
+                "type": "object"
+              }
+            }
+          }
+        },
+        "required": ["id","endPoint","method","requestData"]
+      }
+    }
+  },
+  "required": ["name", "description", "proxy", "requests"]
+}

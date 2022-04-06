@@ -1,0 +1,34 @@
+{
+  "name": "API/Service Name",
+  "description": "This is a service/API description.",
+  "proxy": {
+    "useProxy": false,
+    "host": "host",
+    "port": "8080",
+    "username": "user",
+    "password": "pass"
+  },
+  "requests": [
+    {
+      "id": "request-1",
+      "endPoint": "/api/user",
+      "method": "GET",
+      "requestData": {
+        "queryParameters": {
+          "key": "value",
+          "key2": "value2"
+        },
+        "headers": {
+          "header1": "header-value-1",
+          "header2": "header-value-2"
+        },
+        "body": {
+          "test": {
+            "name": "Kamar",
+            "phone": "123456"
+          }
+        }
+      }
+    }
+  ]
+}

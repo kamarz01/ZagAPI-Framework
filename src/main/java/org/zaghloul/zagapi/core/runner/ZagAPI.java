@@ -3,7 +3,7 @@ package org.zaghloul.zagapi.core.runner;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import org.everit.json.schema.ValidationException;
-import org.zaghloul.zagapi.Constant.RequestConstant;
+import org.zaghloul.zagapi.constant.RequestConstant;
 import org.zaghloul.zagapi.exception.ZagAPIException;
 import org.zaghloul.zagapi.annotations.ZagREST;
 import org.zaghloul.zagapi.core.domain.ZagRequest;

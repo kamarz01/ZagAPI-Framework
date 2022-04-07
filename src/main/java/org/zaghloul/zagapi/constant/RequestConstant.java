@@ -1,4 +1,4 @@
-package org.zaghloul.zagapi.Constant;
+package org.zaghloul.zagapi.constant;
 
 public class RequestConstant {
     public static String HEADERS = "headers";

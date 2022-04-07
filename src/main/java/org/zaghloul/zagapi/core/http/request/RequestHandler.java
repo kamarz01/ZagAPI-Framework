@@ -1,7 +1,7 @@
 package org.zaghloul.zagapi.core.http.request;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.zaghloul.zagapi.Constant.RequestConstant;
+import org.zaghloul.zagapi.constant.RequestConstant;
 
 public class RequestHandler {
 

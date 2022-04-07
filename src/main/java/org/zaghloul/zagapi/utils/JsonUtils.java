@@ -8,7 +8,7 @@ import org.everit.json.schema.ValidationException;
 import org.everit.json.schema.loader.SchemaLoader;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import org.zaghloul.zagapi.Constant.FileConstant;
+import org.zaghloul.zagapi.constant.FileConstant;
 import java.io.IOException;
 
 import static java.nio.charset.Charset.defaultCharset;

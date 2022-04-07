@@ -114,6 +114,7 @@ public class ZagAPI {
         JsonNode requestBody = requestData.getRequestData();
         httpRequest.data.body = requestBody.get(RequestConstant.BODY);
         requestHandler.handleQueryParameters(requestBody,httpRequest);
+        requestHandler.handleQueryParametersInURI(requestData.getEndPoint(),httpRequest);
         requestHandler.handleHeaders(requestBody,httpRequest);
         return httpRequest;
     }

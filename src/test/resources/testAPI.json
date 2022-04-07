@@ -11,12 +11,16 @@
   "requests": [
     {
       "id": "request-1",
-      "endPoint": "/api/user",
+      "endPoint": "/api/user?id=value&user&key=value",
       "method": "GET",
       "requestData": {
         "queryParameters": {
           "key": "value",
           "key2": "value2"
+        },
+        "formParameters": {
+          "formKey": "formValue",
+          "formKey2": "formValue2"
         },
         "headers": {
           "header1": "header-value-1",

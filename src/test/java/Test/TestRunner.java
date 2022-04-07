@@ -9,7 +9,7 @@ public class TestRunner {
     public static void main(String[] args){
         ZagAPI.init(TestClass.class);
         Response response = TestClass.testMethod.getResponse();
-        response.prettyPrint();
+        //response.prettyPrint();
     }
 
 }

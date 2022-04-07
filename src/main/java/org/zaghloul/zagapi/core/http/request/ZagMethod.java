@@ -6,9 +6,11 @@ import io.restassured.http.Method;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.zaghloul.zagapi.exception.ZagAPIException;
 
 @Data
+@Slf4j
 public class ZagMethod {
     public String endPoint = null;
     public HttpMethod method;
@@ -27,6 +29,7 @@ public class ZagMethod {
 
             //TODO: fix query params if in endpoint/pat
             RequestSpecification requestSpec = getRequestSpec(data);
+            log.info("Sending '{}' request on '{}', {}",method,endPoint,data);
             data.clearAll();
             return requestSpec.request(Method.valueOf(this.method.name()));
         } catch (Exception e) {

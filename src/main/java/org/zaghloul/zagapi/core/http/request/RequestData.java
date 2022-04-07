@@ -15,7 +15,6 @@ public class RequestData {
     public void clearAll() {
         headers = new HashMap<>();
         queryParams = new HashMap<>();
-        queryParams.clear();
         body = null;
     }
 }

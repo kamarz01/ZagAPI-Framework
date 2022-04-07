@@ -11,8 +11,8 @@
   "requests": [
     {
       "id": "request-1",
-      "endPoint": "/api/user?id=value&user&key=value",
-      "method": "GET",
+      "endPoint": "83d32266-a623-4d56-baa8-d11ef82928ac?id=value&user&key=value",
+      "method": "POST",
       "requestData": {
         "queryParameters": {
           "key": "value",

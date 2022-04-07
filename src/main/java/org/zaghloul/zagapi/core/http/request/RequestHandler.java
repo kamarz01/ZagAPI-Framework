@@ -38,5 +38,10 @@ public class RequestHandler {
         }
     }
 
-
+    public void handleFormParameters(JsonNode jsonObject, ZagMethod method) {
+        JsonNode formParams = jsonObject.get(RequestConstant.FORM_PARAMETERS);
+        if (formParams != null && !formParams.isEmpty()) {
+            formParams.fieldNames().forEachRemaining(form -> method.data.formParams.put(form, formParams.get(form).asText()));
+        }
+    }
 }

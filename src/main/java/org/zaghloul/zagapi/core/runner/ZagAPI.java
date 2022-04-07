@@ -115,6 +115,7 @@ public class ZagAPI {
         httpRequest.data.body = requestBody.get(RequestConstant.BODY);
         requestHandler.handleQueryParameters(requestBody,httpRequest);
         requestHandler.handleQueryParametersInURI(requestData.getEndPoint(),httpRequest);
+        requestHandler.handleFormParameters(requestBody,httpRequest);
         requestHandler.handleHeaders(requestBody,httpRequest);
         return httpRequest;
     }

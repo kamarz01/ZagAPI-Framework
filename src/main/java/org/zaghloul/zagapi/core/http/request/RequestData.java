@@ -11,10 +11,12 @@ public class RequestData {
     public Object body = null;
     public Map<String, String> headers = new HashMap<>();
     public Map<String, String> queryParams = new HashMap<>();
+    public Map<String, String> formParams = new HashMap<>();
 
     public void clearAll() {
         headers = new HashMap<>();
         queryParams = new HashMap<>();
+        formParams = new HashMap<>();
         body = null;
     }
 }

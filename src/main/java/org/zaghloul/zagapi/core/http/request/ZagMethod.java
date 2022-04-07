@@ -42,12 +42,14 @@ public class ZagMethod {
         if (data == null)
             return spec;
         //TODO: fix base
-        spec.baseUri("https://reqres.in/");
+        spec.baseUri("https://webhook.site");
         //TODO: fix content-type
         spec.contentType(ContentType.JSON);
 
         if (endPoint != null)
             spec.basePath(endPoint);
+        if (!data.formParams.isEmpty())
+            spec.formParams(data.formParams);
         if (!data.queryParams.isEmpty())
             spec.queryParams(data.queryParams);
         if (!data.headers.isEmpty())

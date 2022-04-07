@@ -42,7 +42,7 @@ public class ZagMethod {
         if (data == null)
             return spec;
         //TODO: fix base
-        spec.baseUri("https://webhook.site");
+        spec.baseUri("https://postman-echo.com");
         //TODO: fix content-type
         spec.contentType(ContentType.JSON);
 

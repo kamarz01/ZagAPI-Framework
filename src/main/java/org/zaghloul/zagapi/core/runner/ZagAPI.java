@@ -13,11 +13,14 @@ import org.zaghloul.zagapi.core.http.request.RequestHandler;
 import org.zaghloul.zagapi.core.http.request.ZagMethod;
 import org.zaghloul.zagapi.utils.AnnotationUtils;
 import org.zaghloul.zagapi.utils.JsonUtils;
+import org.zaghloul.zagapi.utils.ReflectionUtils;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.lang.reflect.Modifier.isStatic;
@@ -27,10 +30,30 @@ public class ZagAPI {
 
     private static AnnotationUtils annotationUtils;
     private static RequestHandler requestHandler;
+    private static ReflectionUtils reflectionUtils;
     private static JsonUtils jsonUtils;
+
+    public static void init(){
+        try {
+            preInit();
+            handleFrameworkClasses(null);
+        }catch (Exception e){
+            throw new ZagAPIException(String.format("ZagAPI execution failed, %s",e.getMessage()));
+        }
+    }
+
+    public static void init(String apiClassesPackageName){
+        try {
+            preInit();
+            handleFrameworkClasses(apiClassesPackageName);
+        }catch (Exception e){
+            throw new ZagAPIException(String.format("ZagAPI execution failed, %s",e.getMessage()));
+        }
+    }
 
     public static <T> T init(Class<T> klass) {
         try {
+            preInit();
             return handleInit(klass);
         }catch (Exception e){
             throw new ZagAPIException(String.format("ZagAPI execution failed, %s",e.getMessage()));
@@ -38,17 +61,24 @@ public class ZagAPI {
     }
 
     private static <T> T handleInit(Class<T> klass){
-        preInit();
         handleFrameworkAnnotation(klass);
         handleSchemaValidation(klass);
         return handleZagRequestMethods(klass,handleFileMapping(klass));
     }
 
-    public static void preInit(){
+    private static void preInit(){
         annotationUtils = new AnnotationUtils();
         requestHandler = new RequestHandler();
+        reflectionUtils = new ReflectionUtils();
         jsonUtils = new JsonUtils();
         log.info("Starting ZagRest API Framework...");
+    }
+
+    private static void handleFrameworkClasses(String apiClassesPackageName){
+        Set<Class<?>> zagRestClasses = reflectionUtils.getClassesAnnotatedWithFrameworkAnnotation(apiClassesPackageName);
+        for (Class<?> klass:zagRestClasses) {
+            handleInit(klass);
+        }
     }
 
     private static <T> void handleFrameworkAnnotation(Class<T> klass){
@@ -119,8 +149,4 @@ public class ZagAPI {
         requestHandler.handleHeaders(requestBody,httpRequest);
         return httpRequest;
     }
-
-
-
-
 }

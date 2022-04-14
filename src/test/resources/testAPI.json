@@ -2,16 +2,16 @@
   "name": "API/Service Name",
   "description": "This is a service/API description.",
   "proxy": {
-    "useProxy": false,
-    "host": "host",
+    "useProxy": true,
+    "host": "91.224.62.194",
     "port": "8080",
-    "username": "user",
-    "password": "pass"
+    "username": "az",
+    "password": "xz"
   },
   "requests": [
     {
       "id": "request-1",
-      "endPoint": "post?id=value&user&key=value",
+      "endPoint": "/api/users",
       "method": "POST",
       "requestData": {
         "queryParameters": {

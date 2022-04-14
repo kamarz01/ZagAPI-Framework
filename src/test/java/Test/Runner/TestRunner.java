@@ -4,7 +4,7 @@ import Test.AnotherTest.TestClass3;
 import Test.TestClass;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
-import org.zaghloul.zagapi.core.runner.ZagAPI;
+import org.zaghloul.zagapi.core.engine.ZagAPI;
 
 @Slf4j
 public class TestRunner {
@@ -13,9 +13,7 @@ public class TestRunner {
         //ZagAPI.init();
         ZagAPI.init("Test");
         Response response = TestClass.testMethod.getResponse();
-        Response response2 = TestClass3.testMethod2.getResponse();
         response.prettyPrint();
-        response2.prettyPrint();
     }
 
 }

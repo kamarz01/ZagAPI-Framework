@@ -1,9 +1,10 @@
-package org.zaghloul.zagapi.core.runner;
+package org.zaghloul.zagapi.core.engine;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import org.everit.json.schema.ValidationException;
 import org.zaghloul.zagapi.constant.RequestConstant;
+import org.zaghloul.zagapi.core.http.proxy.ProxyHandler;
 import org.zaghloul.zagapi.exception.ZagAPIException;
 import org.zaghloul.zagapi.annotations.ZagREST;
 import org.zaghloul.zagapi.core.domain.ZagRequest;
@@ -19,7 +20,6 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,6 +30,7 @@ public class ZagAPI {
 
     private static AnnotationUtils annotationUtils;
     private static RequestHandler requestHandler;
+    private static ProxyHandler proxyHandler;
     private static ReflectionUtils reflectionUtils;
     private static JsonUtils jsonUtils;
 
@@ -70,6 +71,7 @@ public class ZagAPI {
         annotationUtils = new AnnotationUtils();
         requestHandler = new RequestHandler();
         reflectionUtils = new ReflectionUtils();
+        proxyHandler = new ProxyHandler();
         jsonUtils = new JsonUtils();
         log.info("Starting ZagRest API Framework...");
     }
@@ -138,15 +140,16 @@ public class ZagAPI {
         field.setAccessible(true);
         String reqId = annotationUtils.getZagRequestAnnotationRequestId(field);
         ZagRequest requestData = annotationUtils.getZagMethodRequestDataById(reqId,apiSpec.getRequests());
-        ZagMethod httpRequest = new ZagMethod();
-        httpRequest.setMethod(HttpMethod.valueOf(requestData.getMethod()));
-        httpRequest.setEndPoint(requestData.getEndPoint());
+        ZagMethod method = new ZagMethod();
+        method.setMethod(HttpMethod.valueOf(requestData.getMethod()));
+        method.setEndPoint(requestData.getEndPoint());
         JsonNode requestBody = requestData.getRequestData();
-        httpRequest.data.body = requestBody.get(RequestConstant.BODY);
-        requestHandler.handleQueryParameters(requestBody,httpRequest);
-        requestHandler.handleQueryParametersInURI(requestData.getEndPoint(),httpRequest);
-        requestHandler.handleFormParameters(requestBody,httpRequest);
-        requestHandler.handleHeaders(requestBody,httpRequest);
-        return httpRequest;
+        method.getData().body = requestBody.get(RequestConstant.BODY);
+        requestHandler.handleQueryParameters(requestBody,method);
+        requestHandler.handleQueryParametersInURI(requestData.getEndPoint(),method);
+        requestHandler.handleFormParameters(requestBody,method);
+        requestHandler.handleHeaders(requestBody,method);
+        proxyHandler.handleRequestProxy(apiSpec,method);
+        return method;
     }
 }

@@ -4,17 +4,20 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
+import io.restassured.specification.ProxySpecification;
 import io.restassured.specification.RequestSpecification;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.zaghloul.zagapi.core.http.proxy.Proxy;
 import org.zaghloul.zagapi.exception.ZagAPIException;
 
 @Data
 @Slf4j
 public class ZagMethod {
-    public String endPoint = null;
-    public HttpMethod method;
-    public RequestData data;
+    private String endPoint = null;
+    private HttpMethod method;
+    private RequestData data;
+    private Proxy proxyInfo;
 
     public ZagMethod() {
         this.data = new RequestData();
@@ -28,8 +31,8 @@ public class ZagMethod {
                 throw new Exception("endPoint is not specified");
 
             //TODO: fix query params if in endpoint/pat
-            RequestSpecification requestSpec = getRequestSpec(data);
-            log.info("Sending '{}' request on '{}', {}",method,endPoint,data);
+            RequestSpecification requestSpec = getRequestSpec(getData());
+            log.info("Sending '{}' request on '{}', '{}', '{}'",method,endPoint,data,proxyInfo);
             data.clearAll();
             return requestSpec.request(Method.valueOf(this.method.name()));
         } catch (Exception e) {
@@ -42,7 +45,7 @@ public class ZagMethod {
         if (data == null)
             return spec;
         //TODO: fix base
-        spec.baseUri("https://postman-echo.com");
+        spec.baseUri("https://reqres.in");
         //TODO: fix content-type
         spec.contentType(ContentType.JSON);
 
@@ -56,7 +59,12 @@ public class ZagMethod {
             spec.headers(data.headers);
         if ((data.body != null))
             spec.body(data.body);
-
+        if (getProxyInfo() != null && getProxyInfo().isUseProxy()) {
+            ProxySpecification proxySpecification = ProxySpecification.host(getProxyInfo().getHost()).withPort(Integer.parseInt(getProxyInfo().getPort()));
+            if (getProxyInfo().getUsername() != null && getProxyInfo().getPassword() != null)
+                proxySpecification = proxySpecification.withAuth(getProxyInfo().getUsername(), getProxyInfo().getPassword());
+            spec.proxy(proxySpecification);
+        }
         return spec;
     }
 }

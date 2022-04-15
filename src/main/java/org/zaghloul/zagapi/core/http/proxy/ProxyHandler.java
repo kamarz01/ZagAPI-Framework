@@ -1,9 +1,11 @@
 package org.zaghloul.zagapi.core.http.proxy;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import lombok.AllArgsConstructor;
 import org.zaghloul.zagapi.core.domain.ZagProxy;
 import org.zaghloul.zagapi.core.domain.ZagRestSpec;
 import org.zaghloul.zagapi.core.http.request.ZagMethod;
+import org.zaghloul.zagapi.core.transformers.Transformer;
 
 import java.util.Objects;
 

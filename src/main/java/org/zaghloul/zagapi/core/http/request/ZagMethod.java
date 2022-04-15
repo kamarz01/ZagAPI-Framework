@@ -1,6 +1,7 @@
 package org.zaghloul.zagapi.core.http.request;
 
 import io.restassured.RestAssured;
+import io.restassured.config.SSLConfig;
 import io.restassured.http.ContentType;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
@@ -9,6 +10,7 @@ import io.restassured.specification.RequestSpecification;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.zaghloul.zagapi.core.http.proxy.Proxy;
+import org.zaghloul.zagapi.core.transformers.Transformer;
 import org.zaghloul.zagapi.exception.ZagAPIException;
 
 @Data
@@ -18,9 +20,11 @@ public class ZagMethod {
     private HttpMethod method;
     private RequestData data;
     private Proxy proxyInfo;
+    private Transformer transformer;
 
-    public ZagMethod() {
+    public ZagMethod(Transformer transformer) {
         this.data = new RequestData();
+        this.transformer = transformer;
     }
 
     public synchronized Response getResponse() {
@@ -41,11 +45,10 @@ public class ZagMethod {
     }
 
     private RequestSpecification getRequestSpec(RequestData data) {
-        RequestSpecification spec = RestAssured.given();
+        RequestSpecification spec = RestAssured.given().config(RestAssured.config().sslConfig( new SSLConfig().relaxedHTTPSValidation()));
         if (data == null)
             return spec;
-        //TODO: fix base
-        spec.baseUri("https://reqres.in");
+        spec.baseUri(transformer.getFromEnv("baseURL"));
         //TODO: fix content-type
         spec.contentType(ContentType.JSON);
 
@@ -60,11 +63,12 @@ public class ZagMethod {
         if ((data.body != null))
             spec.body(data.body);
         if (getProxyInfo() != null && getProxyInfo().isUseProxy()) {
-            ProxySpecification proxySpecification = ProxySpecification.host(getProxyInfo().getHost()).withPort(Integer.parseInt(getProxyInfo().getPort()));
+            ProxySpecification proxySpecification = ProxySpecification.host(getProxyInfo().getHost()).and().withPort(Integer.parseInt(getProxyInfo().getPort()));
             if (getProxyInfo().getUsername() != null && getProxyInfo().getPassword() != null)
-                proxySpecification = proxySpecification.withAuth(getProxyInfo().getUsername(), getProxyInfo().getPassword());
+                proxySpecification = proxySpecification.and().withAuth(getProxyInfo().getUsername(), getProxyInfo().getPassword());
             spec.proxy(proxySpecification);
         }
         return spec;
     }
+
 }

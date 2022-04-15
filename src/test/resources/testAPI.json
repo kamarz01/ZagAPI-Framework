@@ -2,7 +2,7 @@
   "name": "API/Service Name",
   "description": "This is a service/API description.",
   "proxy": {
-    "useProxy": true,
+    "useProxy": false,
     "host": "91.224.62.194",
     "port": "8080",
     "username": "az",
@@ -11,7 +11,7 @@
   "requests": [
     {
       "id": "request-1",
-      "endPoint": "/api/users",
+      "endPoint": "{{ENV::endpoint}}",
       "method": "POST",
       "requestData": {
         "queryParameters": {
@@ -19,14 +19,19 @@
           "key2": "value2"
         },
         "headers": {
-          "header1": "header-value-1",
-          "header2": "header-value-2"
+          "header1": "{{ENV::env1}}",
+          "header2": "{{ENV::env2}}"
         },
         "body": {
           "test": {
             "name": "Kamar",
             "phone": "123456"
-          }
+          },
+          "array": [
+            {
+              "t1": "{{ENV::env3}}"
+            }
+          ]
         }
       }
     }

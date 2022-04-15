@@ -1,7 +1,5 @@
-package Test.Runner;
+package Test;
 
-import Test.AnotherTest.TestClass3;
-import Test.TestClass;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.zaghloul.zagapi.core.engine.ZagAPI;
@@ -10,8 +8,8 @@ import org.zaghloul.zagapi.core.engine.ZagAPI;
 public class TestRunner {
     public static void main(String[] args){
         //ZagAPI.init(TestClass.class);
-        //ZagAPI.init();
         ZagAPI.init("Test");
+        //ZagAPI.init();
         Response response = TestClass.testMethod.getResponse();
         response.prettyPrint();
     }

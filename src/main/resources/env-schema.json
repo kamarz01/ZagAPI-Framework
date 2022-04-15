@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Environment File Schema",
+  "description": "Defines the schema used to validate Environment File",
+  "type": "array",
+  "minItems": 1,
+  "items": {
+    "type": "object",
+    "properties": {
+      "environment": {
+        "description": "Environment Id",
+        "type": "string",
+        "minLength": 1
+      },
+      "baseURL": {
+        "description": "Environment base URL (Host/Server)",
+        "type": "string",
+        "minLength": 1
+      },
+      "data": {
+        "description": "Environment test data object",
+        "type": "object"
+      }
+    },
+    "required": [
+      "baseURL",
+      "data",
+      "environment"
+    ]
+  }
+}

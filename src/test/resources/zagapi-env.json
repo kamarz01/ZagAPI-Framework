@@ -1,0 +1,20 @@
+[
+  {
+    "environment": "Test",
+    "baseURL": "https://postman-echo.com",
+    "data": {
+      "env1": "TEST_env1_value",
+      "env2": "TEST_env2_value",
+      "env3": "TEST_env3_value",
+      "endpoint": "/post1"
+    }
+  },
+  {
+    "environment": "STG",
+    "baseURL": "https://reqres.in",
+    "data": {
+      "env1": "STG_env1_value",
+      "env2": "STG_env2_value"
+    }
+  }
+]
